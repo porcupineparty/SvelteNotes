@@ -51,4 +51,24 @@ We can then use the component in our project by using the tag
 <Nested />
 ```
 
+## HTML Tags 
+
+Strings are usually inserted as plain text, but with svelte you can use variables to store HTML strings which can be very useful
+
+*For Example* you might have a string that includes something like this 
+```javascript
+<script>
+	let string = 'this string contains some <strong>HTML!!!</strong>';
+</script>
+```
+
+You could then use that in a paragraph tag like the one below:
+
+
+```html
+<p>{@html string}</p>
+```
+
+**Word of caution:** Svelte doesn't perform any sanitization of the expression inside the `@html` code. This is not an issue if something is trusted but make sure that you manually escape something if it is from untrusted content. 
+
 
