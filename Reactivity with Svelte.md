@@ -78,11 +78,73 @@ $: if(count >= 10){
 }
 ```
 
-## Updating Array
+## Updating Arrays
 
 One important thing to note is that because svelte's reactivity is triggered by assignments, using array methods like `push` and `splice` won't automatically cause updates. Even if we use something like numbers.push(...) it won't show up on the page until the DOM is reloaded. 
 
+One way to fix that is to add an assignment that would otherwise be redundant:
 
+```typescript
+function addNumber(){
+	numbers.push(numbers.length + 1);
+	numbers = numbers;
+}
+```
+
+But there's a better more idiomatic solution:
+
+```typescript
+function addNumber(){
+	numbers = [...numbers, numbers.length + 1];
+}
+```
+
+
+Or like this to add just a regular number:
+
+```typescript
+numbers = [...numbers, 3];
+```
+
+- **Pop**: To remove the last element from the array:
+    
+```typescript
+    numbers = numbers.slice(0, -1); // Removes the last element
+```
+    
+- **Shift**: To remove the first element from the array:
+    
+```typescript
+    numbers = numbers.slice(1); // Removes the first element
+```
+    
+- **Unshift**: To add a new element to the beginning of the array:
+    
+```typescript
+    numbers = [newValue, ...numbers]; // Removes the first element
+```
+
+- *Splice*: To remove or add elements at a specific index:
+
+To remove an element:
+
+```typescript
+	const indexToRemove = 1; //change this to the index you want ot remove
+	numbers = [...numbers.slice(0, indexToRemove), ...numbers.slice(indexToRemove + 1)];
+```
+
+To Add an element at a specific index:
+
+```typescript
+const indexToAdd = 1;
+const newValue = 5;
+
+numbers = [
+	...numbers.slice(0, indexToAdd),
+	newValue,
+	...numbers.slice(indexToAdd)
+];
+```
 
 
 
